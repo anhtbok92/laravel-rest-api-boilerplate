@@ -28,11 +28,11 @@ class ApiRequest extends FormRequest
         Log::error("API_BAD_REQUEST: ");
         Log::error(print_r($errors, true));
         $response = new JsonResponse([
-            'code' => 400,
+            'code' => 202,
             'message' => MSG_API_006,
             'error' => $errorMessages,
             'data' => new NullOutput()
-        ],400);
+        ],202);
         throw new ValidationException($validator, $response);
     }
 
