@@ -2,9 +2,11 @@
 
 namespace Modules\Api\Http\Requests;
 
+
+use App\Rules\MaxCharRule;
+
 class UserAccountRegisterRequest extends ApiRequest
 {
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -13,8 +15,8 @@ class UserAccountRegisterRequest extends ApiRequest
     public function rules()
     {
         return [
-            'username' => ['required'],
-            'password' => ['required'],
+            'username' => ['required', new MaxCharRule('username', 50)],
+            'password' => ['required', new MaxCharRule('password', 50)],
         ];
     }
 

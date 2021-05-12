@@ -2,6 +2,8 @@
 
 namespace Modules\Api\Http\Requests;
 
+use App\Rules\MaxCharRule;
+
 class ApiLoginRequest extends ApiRequest
 {
     /**
@@ -12,18 +14,16 @@ class ApiLoginRequest extends ApiRequest
     public function rules()
     {
         return [
-            'username' => ['required'],
-            'password' => ['required'],
+            'username' => ['required', new MaxCharRule('username', 50)],
+            'password' => ['required', new MaxCharRule('password', 50)],
         ];
     }
 
     public function messages()
     {
-        $username = 'username';
-        $password = 'password';
         return [
-            'username.required' => str_replace('{0}', $username, MSG_API_007),
-            'password.required' => str_replace('{0}', $password, MSG_API_007)
+            'username.required' => str_replace('{0}', 'Username', MSG_API_007),
+            'password.required' => str_replace('{0}', 'Password', MSG_API_007)
         ];
     }
 }

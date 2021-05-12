@@ -14,3 +14,4 @@ define('MSG_API_010', 'Register new account successfully');
 define('MSG_API_011', 'Username or password invalid');
 define('MSG_API_012', 'Login successfully');
 define('MSG_API_013', 'Logout successfully');
+define('MSG_API_014', 'Enter {0} within {1} characters in latin characters and {2} characters in japanese.');
