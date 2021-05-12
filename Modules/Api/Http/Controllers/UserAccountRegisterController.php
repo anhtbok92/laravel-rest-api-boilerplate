@@ -17,7 +17,7 @@ class UserAccountRegisterController extends BaseApiController
 
     public function registerNewUser(UserAccountRegisterRequest $request)
     {
-        if ($this->userAccountRepo->checkAccountExistByEmail($request->email)) {
+        if ($this->userAccountRepo->checkAccountExistByEmail($request->username)) {
             return $this->sendSuccessResponse(3, MSG_API_008);
         }
 
@@ -25,10 +25,10 @@ class UserAccountRegisterController extends BaseApiController
             return $this->sendErrorResponse(500, MSG_API_009);
         }
 
-        $request['username'] = $request->email;
+        $request['username'] = $request->username;
 
         $loginRequest = new ApiLoginRequest();
-        $loginRequest['username'] = $request->email;
+        $loginRequest['username'] = $request->username;
         $loginRequest['password'] = $request->password;
         if ($token = $this->userAccountRepo->authenticate($loginRequest)) {
             return $this->sendSuccessResponse(200, MSG_API_010);

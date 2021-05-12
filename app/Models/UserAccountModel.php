@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class UserAccountModel extends Authenticatable implements JWTSubject
@@ -13,11 +12,6 @@ class UserAccountModel extends Authenticatable implements JWTSubject
 
     protected $table = 'user_accounts';
     protected $primaryKey= 'id';
-
-
-    protected $hidden = [
-        'remember_token'
-    ];
 
     public function getJWTIdentifier() {
         return $this->getKey();
@@ -30,5 +24,11 @@ class UserAccountModel extends Authenticatable implements JWTSubject
     public function getAuthPassword()
     {
         return $this->password;
+    }
+
+    public function getBasicUserInfo() {
+        return [
+            'username' => $this->username
+        ];
     }
 }

@@ -13,4 +13,6 @@ interface UserAccountRepositoryInterface
     public function checkAccountExistByEmail($email);
 
     public function registerNewAccount($request);
+
+    public function getLoginResponseData($token);
 }

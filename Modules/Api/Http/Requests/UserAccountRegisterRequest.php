@@ -13,22 +13,16 @@ class UserAccountRegisterRequest extends ApiRequest
     public function rules()
     {
         return [
-            'email' => ['required'],
+            'username' => ['required'],
             'password' => ['required'],
-            'family_name' => ['required'],
-            'first_name' => ['required'],
         ];
     }
 
     public function messages()
     {
-        $password = 'password';
-
         return [
-            'email.required' => str_replace('{0}', 'mail address', MSG_API_007),
-            'password.required' => str_replace('{0}', $password, MSG_API_007),
-            'family_name.required' => str_replace('{0}', 'family name', MSG_API_007),
-            'first_name.required' => str_replace('{0}', 'first name', MSG_API_007),
+            'username.required' => str_replace('{0}', 'Username', MSG_API_007),
+            'password.required' => str_replace('{0}', 'Password', MSG_API_007),
         ];
     }
 }

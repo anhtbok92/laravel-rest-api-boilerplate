@@ -14,19 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => ['db_transaction', 'log.route']], function () {
-    Route::prefix('auth')->group(function () {
-        Route::get('reset-password', function () {
-            return '';
-        })->name('auth.resetPassword');
-
-        Route::post('login', 'AuthController@login');
-        Route::post('refresh-token', 'AuthController@refreshToken')->middleware('api_refresh');
-        Route::post('reset-password', 'SendResetPasswordMailController@sendEmail');
-        Route::post('renew-password', 'ChangePasswordController@handleChangePasswordRequest');
-    });
 
     Route::prefix('regis')->group(function () {
         Route::post('regis-account', 'UserAccountRegisterController@registerNewUser');
+    });
+
+    Route::prefix('auth')->group(function () {
+        Route::post('login', 'AuthController@login');
     });
 });
 

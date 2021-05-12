@@ -19,7 +19,7 @@ class UserAccountRepository implements UserAccountRepositoryInterface
 
     public function authenticate($request)
     {
-        return Auth::guard('api')->attempt(["mail_address" => $request->username, "password" => $request->password]);
+        return Auth::guard('api')->attempt(["username" => $request->username, "password" => $request->password]);
     }
 
     public function getUserAccountByID($id)
@@ -27,19 +27,16 @@ class UserAccountRepository implements UserAccountRepositoryInterface
         return UserAccountModel::find($id);
     }
 
-    public function checkAccountExistByEmail($email)
+    public function checkAccountExistByEmail($username)
     {
-        return UserAccountModel::where('mail_address', $email)->first();
+        return UserAccountModel::where('username', $username)->first();
     }
 
     public function registerNewAccount($request)
     {
-        // dd($request->all());
         $account = new UserAccountModel();
-        $account->mail_address = $request->email;
+        $account->username = $request->username;
         $account->password = Hash::make($request->password);
-        $account->family_name = $request->family_name;
-        $account->first_name = $request->first_name;
         if (!$account->save()) {
             return false;
         }
@@ -51,6 +48,15 @@ class UserAccountRepository implements UserAccountRepositoryInterface
 
         return true;
 
+    }
+
+    public function getLoginResponseData($token)
+    {
+        $userInfo = auth('api')->user()->getBasicUserInfo();
+        return [
+            'access_token' => $token,
+            'user' => $userInfo
+        ];
     }
 }
 
