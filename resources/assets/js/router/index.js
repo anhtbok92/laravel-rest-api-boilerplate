@@ -4,7 +4,6 @@ import Login from "../components/Login.vue";
 import SignUp from "../components/SignUp.vue";
 import Home from "../components/Home.vue";
 import { store } from "../store";
-import * as MutationTypes from '../store/auth/MutationTypes';
 
 Vue.use(Router);
 
@@ -34,11 +33,10 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
     if (store.getters.isLoggedIn) {
-        console.log("logged in");
-        // store.dispatch(MutationTypes.FETCH_USER).then(() => next());
+        // console.log("logged in");
         next();
     } else {
-        console.log("not logged in");
+        // console.log("not logged in");
         if (to.matched.some(record => record.meta.requiresAuth)) {
             next({
                 path: '/'

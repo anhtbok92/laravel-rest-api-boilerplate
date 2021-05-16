@@ -16,6 +16,9 @@
                             <div class="col-md-6">
                                 <input id="username" type="text" class="form-control" name="username" required
                                        v-model="user.username">
+                                <span v-if="error.username" class="error text-danger">
+                                    {{ error.username }}
+                                </span>
                             </div>
                         </div>
 
@@ -26,6 +29,9 @@
                                 <input id="password" type="password" class="form-control" name="password" required
                                        v-model="user.password">
                             </div>
+                            <span v-if="error.password" class="error text-danger">
+                                    {{ error.password }}
+                                </span>
                         </div>
 
                         <div class="form-group">
@@ -33,13 +39,17 @@
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control"
-                                       name="password_confirmation" required v-model="user.confirm_password">
+                                       name="password_confirmation" required v-model="user.confirmPassword">
+                                <span v-if="error.confirmPassword" class="error text-danger">
+                                    {{ error.confirmPassword }}
+                                </span>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary" id="btnRegister"
+                                        data-loading-text="<i class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></i> Register">
                                     Register
                                 </button>
                             </div>
@@ -75,7 +85,12 @@
                 user: {
                     username: '',
                     password: '',
-                    confirm_password: ''
+                    confirmPassword: ''
+                },
+                error: {
+                    username: '',
+                    password: '',
+                    confirmPassword: ''
                 }
             }
         },
@@ -84,15 +99,23 @@
         methods: {
             register(){
                 let component = this;
+                $("#btnRegister").button('loading');
                 axios.post('/api/regis/regis-account', this.user)
                     .then(function (response) {
+                        $("#btnRegister").button('reset');
                         component.message = response.data.message;
                         component.apiStatus = response.data.code;
                         if (response.data.code === 200) {
-                            component.user.username = '';
-                            component.user.password = '';
-                            component.user.confirm_password = '';
+                            Object.keys(component.user).forEach(key => component.user[key] = '')
+                            Object.keys(component.error).forEach(key => component.error[key] = '')
                             $("#reg-success").modal('show');
+                        }
+
+                        if (response.data.code === 202) {
+                            component.error.username = response.data.error.username;
+                            component.error.password = response.data.error.password;
+                            component.error.confirmPassword = response.data.error.confirmPassword;
+                            component.apiStatus = 202;
                         }
                     }, function (response) {
                         console.log(response);

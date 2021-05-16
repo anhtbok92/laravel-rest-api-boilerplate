@@ -1,5 +1,4 @@
 import * as MutationTypes from './MutationTypes';
-import Cookies from "js-cookie";
 import axios from "axios";
 
 const state = {
@@ -19,16 +18,6 @@ const mutations = {
         state.user = '';
         localStorage.removeItem('auth_token');
         localStorage.removeItem('user');
-    },
-    [MutationTypes.FETCH_USER_SUCCESS](state, user) {
-        state.user = user.name;
-    },
-    [MutationTypes.FETCH_USER_FAILURE](state) {
-        state.user = '';
-        state.token = '';
-    },
-    [MutationTypes.UPDATE_USER](state, user) {
-        state.user = user.name;
     }
 };
 const actions = {
@@ -36,23 +25,12 @@ const actions = {
         commit(MutationTypes.LOGIN, response);
     },
     [MutationTypes.LOGOUT]({commit}) {
-        console.log('action_LOGOUT');
-        commit(MutationTypes.LOGOUT);
-    },
-    [MutationTypes.FETCH_USER_SUCCESS]({commit}, user) {
-        commit(MutationTypes.FETCH_USER_SUCCESS, user);
-    },
-    [MutationTypes.FETCH_USER_FAILURE]({commit}) {
-        commit(MutationTypes.FETCH_USER_FAILURE);
-    },
-    [MutationTypes.FETCH_USER]({commit}) {
-        axios.get('/api/auth/user')
+        axios.post('/api/auth/logout')
             .then((response) => {
-                console.log(response);
-                if (response.data.meta.status === 'ok') {
-                    commit(MutationTypes.FETCH_USER_SUCCESS, response.data.data.user);
+                if (response.data.code === 200) {
+                    commit(MutationTypes.LOGOUT);
                 } else {
-                    commit(MutationTypes.LOGOUT)
+                    alert("System error. Logout failed !");
                 }
             });
     }
