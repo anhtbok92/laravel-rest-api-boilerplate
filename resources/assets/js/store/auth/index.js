@@ -16,6 +16,7 @@ const mutations = {
         state.user.name = response.data.data.user.username;
     },
     [MutationTypes.LOGOUT](state) {
+        console.log('muation-Logout');
         state.token = '';
         state.user.name = '';
         Cookies.remove('auth_token')
@@ -36,6 +37,7 @@ const actions = {
         commit(MutationTypes.LOGIN, response);
     },
     [MutationTypes.LOGOUT]({commit}) {
+        console.log('action_LOGOUT');
         commit(MutationTypes.LOGOUT);
     },
     [MutationTypes.FETCH_USER_SUCCESS]({commit}, user) {
@@ -59,7 +61,7 @@ const actions = {
 const getters = {
     authUser: state => state.user,
     authToken: state => state.token,
-    isLoggedIn: state => state.token !== undefined
+    isLoggedIn: state => state.token !== undefined && state.token !== ""
 };
 export default {
     state,

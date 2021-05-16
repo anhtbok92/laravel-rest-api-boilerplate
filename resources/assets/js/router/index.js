@@ -30,6 +30,8 @@ const router = new Router({
 
 
 router.beforeEach((to, from, next) => {
+    console.log('check login');
+    console.log(store);
     if (store.getters.isLoggedIn) {
         console.log("logged in");
         store.dispatch(MutationTypes.FETCH_USER).then(() => next());

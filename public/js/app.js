@@ -2429,6 +2429,8 @@ var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
 });
 
 router.beforeEach(function (to, from, next) {
+    console.log('check login');
+    console.log(__WEBPACK_IMPORTED_MODULE_5__store__["a" /* store */]);
     if (__WEBPACK_IMPORTED_MODULE_5__store__["a" /* store */].getters.isLoggedIn) {
         console.log("logged in");
         __WEBPACK_IMPORTED_MODULE_5__store__["a" /* store */].dispatch(__WEBPACK_IMPORTED_MODULE_6__store_auth_MutationTypes__["b" /* FETCH_USER */]).then(function () {
@@ -2471,6 +2473,7 @@ var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED
     state.token = response.data.data.access_token;
     state.user.name = response.data.data.user.username;
 }), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["a" /* LOGOUT */], function (state) {
+    console.log('muation-Logout');
     state.token = '';
     state.user.name = '';
     __WEBPACK_IMPORTED_MODULE_1_js_cookie___default.a.remove('auth_token');
@@ -2489,6 +2492,7 @@ var actions = (_actions = {}, _defineProperty(_actions, __WEBPACK_IMPORTED_MODUL
 }), _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["a" /* LOGOUT */], function (_ref2) {
     var commit = _ref2.commit;
 
+    console.log('action_LOGOUT');
     commit(__WEBPACK_IMPORTED_MODULE_0__MutationTypes__["a" /* LOGOUT */]);
 }), _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["d" /* FETCH_USER_SUCCESS */], function (_ref3, user) {
     var commit = _ref3.commit;
@@ -2518,7 +2522,7 @@ var getters = {
         return state.token;
     },
     isLoggedIn: function isLoggedIn(state) {
-        return state.token !== undefined;
+        return state.token !== undefined && state.token !== "";
     }
 };
 /* harmony default export */ __webpack_exports__["a"] = ({
