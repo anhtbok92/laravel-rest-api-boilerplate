@@ -1,62 +1,112 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Laravel 8.X REST API With API Authentication
+A PHP Laravel Authentication API with username, password verification, developed with Laravel 8.x framework.
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Application screen
 
-## About Laravel
+- Login
+    ![Login screen](loginscreen.PNG "Login screen")
+    
+- Login Validation
+    ![Login with_validation](loginValidation.PNG "Login with validation")
+    
+- Register new member
+    ![register_new_member](registerNewMember.PNG "Register new member")
+    
+- Homepage
+    ![home_page](homePageTest.PNG "Register new member")
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Resources
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+This project was created in 2 parts
+- <b>Backend</b>: Use laravel framework 8.x to create API, using JWT for Authentication
+- <b>Frontend</b>: Use Vue, Vuex, Vue-router, Bootstrap... to call API from backend
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Installation steps
 
-## Learning Laravel
+Follow the bellow steps to install and set up the application.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+**Step 1: Clone the Application**<br>
+You can download the ZIP file or git clone from my repo into your project  directory.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+**Step 2: Configure the Application**<br>
+After you clone the repo in to your project folder the project need to be set up by following commands-
 
-## Laravel Sponsors
+- In terminal go to your project directory and Run 
+    
+        composer install 
+    
+- Then copy the .env.example file to .env file in the project root folder
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+- Edit the .env file and fill all required data for the bellow variables
+    
+        APP_URL=http://localhost //your application domain URL go here
+    
+        DB_HOST=127.0.0.1 // Your DB host IP. Here we are assumed it to be local host
+        DB_PORT=3306 //Port if you are using except the default
+        DB_DATABASE=name_of_your_database
+        DB_USERNAME=db_user_name
+        DB_PASSWORD=db_password
+    
+- To set the Application key run the bellow command in your terminal.
+    
+        php artisan key:generate
 
-### Premium Partners
+**Step 3: Run docker environment (by default your environment has docker installed)**<br>
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
+- Fill default data if your need by running bellow command.
 
-## Contributing
+        ./vendor/bin/sail up
+        
+- The next, check docker container running in server
+        
+        docker ps
+    
+        
+**Step 4: Run migration**<br>
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- Make your storage and bootstrapp folder writable by your application user.
 
-## Code of Conduct
+- Create all the necessary tables need for the application by runing the bellow command.
+    
+        php artisan migrate
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Security Vulnerabilities
+## API Endpoints and Routes
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Laravel follows the Model View Controller (MVC) pattern I have created models associated with each resource. You can check in the **routes/api.php** file for all the routes that map to controllers in order to send out JSON data that make requests to our API.
 
-## License
+Bellow are the all resources API endpoints - 
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+        POST    | api/regis/regis-account
+        ```
+        {
+            "username": "test",
+            "password": "Abc@123456789#"
+        }
+        ```
+        
+        POST    | api/auth/login
+        ```
+        {
+            "username": "test",
+            "password": "Abc@123456789#"
+        }
+        
+        
+        POST    | api/auth/logout
+        ```
+        Authorization: `Bearer access_token_result_after_login `
+        ```
+
+## Install for frontend
+
+- Fill default data if your need by running bellow command.
+
+        npm i
+
+- The next for run application
+
+        npm run dev
+        
+Open application in browser for use       
+Thats all! The application is configured now.

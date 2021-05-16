@@ -24,11 +24,12 @@ const actions = {
     [MutationTypes.LOGIN]({commit}, response) {
         commit(MutationTypes.LOGIN, response);
     },
-    [MutationTypes.LOGOUT]({commit}) {
+    [MutationTypes.LOGOUT]({commit}, router) {
         axios.post('/api/auth/logout')
             .then((response) => {
                 if (response.data.code === 200) {
                     commit(MutationTypes.LOGOUT);
+                    router.router.push('/')
                 } else {
                     alert("System error. Logout failed !");
                 }

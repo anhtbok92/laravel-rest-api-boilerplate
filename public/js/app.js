@@ -385,16 +385,8 @@ module.exports = __webpack_require__(16);
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LOGOUT; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return LOGIN; });
-/* unused harmony export UPDATE_USER */
-/* unused harmony export FETCH_USER_SUCCESS */
-/* unused harmony export FETCH_USER_FAILURE */
-/* unused harmony export FETCH_USER */
 var LOGOUT = 'LOGOUT';
 var LOGIN = 'LOGIN';
-var UPDATE_USER = 'UPDATE_USER';
-var FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
-var FETCH_USER_FAILURE = 'FETCH_USER_FAILURE';
-var FETCH_USER = 'FETCH_USER';
 
 /***/ }),
 /* 3 */
@@ -2047,8 +2039,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         logout: function logout(event) {
             var component = this;
-            component.$store.dispatch(__WEBPACK_IMPORTED_MODULE_0__store_auth_MutationTypes__["a" /* LOGOUT */]);
-            component.$router.push('/');
+            component.$store.dispatch(__WEBPACK_IMPORTED_MODULE_0__store_auth_MutationTypes__["a" /* LOGOUT */], {
+                router: this.$router
+            });
+            // component.$router.push('/');
         }
     }
 });
@@ -2457,12 +2451,13 @@ var actions = (_actions = {}, _defineProperty(_actions, __WEBPACK_IMPORTED_MODUL
     var commit = _ref.commit;
 
     commit(__WEBPACK_IMPORTED_MODULE_0__MutationTypes__["b" /* LOGIN */], response);
-}), _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["a" /* LOGOUT */], function (_ref2) {
+}), _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["a" /* LOGOUT */], function (_ref2, router) {
     var commit = _ref2.commit;
 
     __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/api/auth/logout').then(function (response) {
         if (response.data.code === 200) {
             commit(__WEBPACK_IMPORTED_MODULE_0__MutationTypes__["a" /* LOGOUT */]);
+            router.router.push('/');
         } else {
             alert("System error. Logout failed !");
         }

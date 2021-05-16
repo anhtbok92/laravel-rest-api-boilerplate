@@ -80,8 +80,10 @@
         methods: {
             logout(event) {
                 let component = this;
-                component.$store.dispatch(MutationTypes.LOGOUT);
-                component.$router.push('/');
+                component.$store.dispatch(MutationTypes.LOGOUT, {
+                    router : this.$router
+                });
+                // component.$router.push('/');
             }
         }
     }
