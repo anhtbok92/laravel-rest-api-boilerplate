@@ -3,33 +3,32 @@ import Cookies from "js-cookie";
 import axios from "axios";
 
 const state = {
-    user: {
-        name: ''
-    },
-    token: Cookies.get('auth_token')
+    user: JSON.parse(localStorage.getItem('user')),
+    token: localStorage.getItem('auth_token')
 };
 
 const mutations = {
     [MutationTypes.LOGIN](state, response) {
-        Cookies.set('auth_token', response.data.data.access_token);
+        localStorage.setItem('auth_token', response.data.data.access_token);
+        localStorage.setItem('user', JSON.stringify(response.data.data.user));
         state.token = response.data.data.access_token;
-        state.user.name = response.data.data.user.username;
+        state.user = response.data.data.user;
     },
     [MutationTypes.LOGOUT](state) {
-        console.log('muation-Logout');
         state.token = '';
-        state.user.name = '';
-        Cookies.remove('auth_token')
+        state.user = '';
+        localStorage.removeItem('auth_token');
+        localStorage.removeItem('user');
     },
     [MutationTypes.FETCH_USER_SUCCESS](state, user) {
-        state.user.name = user.name;
+        state.user = user.name;
     },
     [MutationTypes.FETCH_USER_FAILURE](state) {
-        state.user.name = '';
+        state.user = '';
         state.token = '';
     },
     [MutationTypes.UPDATE_USER](state, user) {
-        state.user.name = user.name;
+        state.user = user.name;
     }
 };
 const actions = {
@@ -59,9 +58,13 @@ const actions = {
     }
 };
 const getters = {
-    authUser: state => state.user,
+    authUser: state => {
+        return state.user
+    },
     authToken: state => state.token,
-    isLoggedIn: state => state.token !== undefined && state.token !== ""
+    isLoggedIn: state => {
+        return state.token !== undefined && state.token !== "" && state.token !== null
+    }
 };
 export default {
     state,

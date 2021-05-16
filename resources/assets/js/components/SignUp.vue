@@ -5,6 +5,11 @@
                 <div class="panel-heading">Register</div>
                 <div class="panel-body">
                     <form class="form-horizontal" method="POST" action="#" @submit.prevent="register">
+                        <div v-if="apiStatus !== 200 && apiStatus !== ''" class="form-group">
+                            <div  class="alert alert-danger">
+                                {{ message }}
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="username" class="col-md-4 control-label">Username</label>
 
@@ -38,12 +43,6 @@
                                     Register
                                 </button>
                             </div>
-                        </div>
-
-                        <div class="form-group text-center">
-                            <p v-if="apiStatus !== 200" class="c-red m-b-0 font-15">
-                                {{ message }}
-                            </p>
                         </div>
                     </form>
                 </div>
@@ -94,7 +93,6 @@
                             component.user.password = '';
                             component.user.confirm_password = '';
                             $("#reg-success").modal('show');
-                            component.$router.push('login');
                         }
                     }, function (response) {
                         console.log(response);

@@ -15,7 +15,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="#">
-                        Vue Spa
+                        Laravel sample app
                     </a>
                 </div>
 
@@ -32,7 +32,7 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                    aria-expanded="false">
-                                    {{ authUser.name }}<span class="caret"></span>
+                                    {{ authUser.username }}<span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">

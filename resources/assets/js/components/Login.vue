@@ -5,26 +5,30 @@
                 <div class="panel-heading">Login</div>
                 <div class="panel-body">
                     <form class="form-horizontal" method="POST" action="#" @submit.prevent="login">
-
+                        <div v-if="apiStatus !== 200 && apiStatus !== ''" class="form-group">
+                            <div  class="alert alert-danger">
+                                {{ message }}
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="username" class="col-md-4 control-label">Username</label>
-                            <p v-if="error.username" class="c-red m-b-0 font-15">
-                                {{ error.username }}
-                            </p>
                             <div class="col-md-6">
                                 <input id="username" type="text" class="form-control" name="username" required autofocus
                                        v-model="authenticate.username">
+                                <span v-if="error.username" class="error text-danger">
+                                    {{ error.username }}
+                                </span>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="password" class="col-md-4 control-label">Password</label>
-                            <p v-if="error.password" class="c-red m-b-0 font-15">
-                                {{ error.password }}
-                            </p>
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control" name="password" required
                                        v-model="authenticate.password">
+                                <span v-if="error.password" class="error text-danger">
+                                    {{ error.password }}
+                                </span>
                             </div>
                         </div>
 
@@ -35,12 +39,6 @@
                                     Login
                                 </button>
                             </div>
-                        </div>
-
-                        <div class="form-group text-center">
-                            <p v-if="apiStatus !== 200" class="c-red m-b-0 font-15">
-                                {{ message }}
-                            </p>
                         </div>
                     </form>
                 </div>
@@ -68,6 +66,9 @@
                 }
             }
         },
+        components: {
+            // Loading
+        },
         mounted() {
         },
         methods: {
@@ -80,7 +81,6 @@
                 $("#btnLogin").button('loading');
                 axios.post('/api/auth/login', authenticate)
                     .then(function (response) {
-                       console.log(response);
                         $("#btnLogin").button('reset');
                         if (response.data.code === 200) {
                             component.$store.dispatch(MutationTypes.LOGIN, response);
