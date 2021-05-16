@@ -384,13 +384,13 @@ module.exports = __webpack_require__(16);
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LOGOUT; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return SAVE_USER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return LOGIN; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return UPDATE_USER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return FETCH_USER_SUCCESS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return FETCH_USER_FAILURE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return FETCH_USER; });
 var LOGOUT = 'LOGOUT';
-var SAVE_USER = 'SAVE_USER';
+var LOGIN = 'LOGIN';
 var UPDATE_USER = 'UPDATE_USER';
 var FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
 var FETCH_USER_FAILURE = 'FETCH_USER_FAILURE';
@@ -2199,7 +2199,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log(response);
                 $("#btnLogin").button('reset');
                 if (response.data.code === 200) {
-                    component.$store.dispatch(__WEBPACK_IMPORTED_MODULE_1__store_auth_MutationTypes__["c" /* SAVE_USER */], response);
+                    component.$store.dispatch(__WEBPACK_IMPORTED_MODULE_1__store_auth_MutationTypes__["c" /* LOGIN */], response);
                     component.$router.push('home');
                 } else {
                     component.message = response.data.message;
@@ -2466,10 +2466,10 @@ var state = {
     token: __WEBPACK_IMPORTED_MODULE_1_js_cookie___default.a.get('auth_token')
 };
 
-var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["c" /* SAVE_USER */], function (state, response) {
-    __WEBPACK_IMPORTED_MODULE_1_js_cookie___default.a.set('auth_token', response.data.data.token);
-    state.token = response.data.data.token;
-    state.user.name = response.data.data.user.name;
+var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["c" /* LOGIN */], function (state, response) {
+    __WEBPACK_IMPORTED_MODULE_1_js_cookie___default.a.set('auth_token', response.data.data.access_token);
+    state.token = response.data.data.access_token;
+    state.user.name = response.data.data.user.username;
 }), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["a" /* LOGOUT */], function (state) {
     state.token = '';
     state.user.name = '';
@@ -2482,10 +2482,10 @@ var mutations = (_mutations = {}, _defineProperty(_mutations, __WEBPACK_IMPORTED
 }), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["f" /* UPDATE_USER */], function (state, user) {
     state.user.name = user.name;
 }), _mutations);
-var actions = (_actions = {}, _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["c" /* SAVE_USER */], function (_ref, response) {
+var actions = (_actions = {}, _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["c" /* LOGIN */], function (_ref, response) {
     var commit = _ref.commit;
 
-    commit(__WEBPACK_IMPORTED_MODULE_0__MutationTypes__["c" /* SAVE_USER */], response);
+    commit(__WEBPACK_IMPORTED_MODULE_0__MutationTypes__["c" /* LOGIN */], response);
 }), _defineProperty(_actions, __WEBPACK_IMPORTED_MODULE_0__MutationTypes__["a" /* LOGOUT */], function (_ref2) {
     var commit = _ref2.commit;
 

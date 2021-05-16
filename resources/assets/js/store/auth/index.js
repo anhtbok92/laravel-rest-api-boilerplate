@@ -10,10 +10,10 @@ const state = {
 };
 
 const mutations = {
-    [MutationTypes.SAVE_USER](state, response) {
-        Cookies.set('auth_token', response.data.data.token);
-        state.token = response.data.data.token;
-        state.user.name = response.data.data.user.name;
+    [MutationTypes.LOGIN](state, response) {
+        Cookies.set('auth_token', response.data.data.access_token);
+        state.token = response.data.data.access_token;
+        state.user.name = response.data.data.user.username;
     },
     [MutationTypes.LOGOUT](state) {
         state.token = '';
@@ -32,8 +32,8 @@ const mutations = {
     }
 };
 const actions = {
-    [MutationTypes.SAVE_USER]({commit}, response) {
-        commit(MutationTypes.SAVE_USER, response);
+    [MutationTypes.LOGIN]({commit}, response) {
+        commit(MutationTypes.LOGIN, response);
     },
     [MutationTypes.LOGOUT]({commit}) {
         commit(MutationTypes.LOGOUT);

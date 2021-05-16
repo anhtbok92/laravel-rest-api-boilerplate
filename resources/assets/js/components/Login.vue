@@ -83,7 +83,7 @@
                        console.log(response);
                         $("#btnLogin").button('reset');
                         if (response.data.code === 200) {
-                            component.$store.dispatch(MutationTypes.SAVE_USER, response);
+                            component.$store.dispatch(MutationTypes.LOGIN, response);
                             component.$router.push('home');
                         } else {
                             component.message = response.data.message;
