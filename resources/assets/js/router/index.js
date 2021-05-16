@@ -13,17 +13,20 @@ const router = new Router({
         {
             path: '/',
             name: 'login',
-            component: Login
+            component: Login,
+            meta: { requiresAuth: false }
         },
         {
             path: '/signup',
             name: 'signup',
-            component: SignUp
+            component: SignUp,
+            meta: { requiresAuth: false }
         },
         {
             path: '/home',
             name: 'home',
-            component: Home
+            component: Home,
+            meta: { requiresAuth: true }
         }
     ]
 });
@@ -36,7 +39,13 @@ router.beforeEach((to, from, next) => {
         next();
     } else {
         console.log("not logged in");
-        next();
+        if (to.matched.some(record => record.meta.requiresAuth)) {
+            next({
+                path: '/'
+            })
+        } else {
+            next();
+        }
     }
 })
 export default router;
